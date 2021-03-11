@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use PayPal\Api\Order;
 
 class WeatherController extends Controller{
     public function login(){
         return view('login');
+    }
+
+    public function vista(){
+        return view('vista');
     }
 
     public function buscar(){
@@ -19,19 +24,13 @@ class WeatherController extends Controller{
         $datos = file_get_contents ("http://api.openweathermap.org/data/2.5/weather?zip=".$_GET['cpostal'].",es&units=metric&appid=6682dabc389796ef2723e3330b13900a&lang=es");
         $json = json_decode($datos);
         $ciudad = $json->name;
-        // $lat = $json->coord->lat;
-        // $lon = $json->coord->lon;
-        $temp = $json->main->temp;
-        $tempmax = $json->main->temp_max;
-        $tempmin = $json->main->temp_min;
-        $presion = $json->main->pressure;
-        $humedad = $json->main->humidity;
-        // $vel_viento = $json->main->temp;
-        $estado_cielo = $json->weather[0]->main;
         $descripcion = $json->weather[0]->description;
-
-        DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp]);
-
+        $cpostal = $_GET['cpostal'];
+        $temp = $json->main->temp;
+        $descripcion = $json->weather[0]->description;
+        // DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp, 'descripcion'=>$descripcion]);
+        // $tiempo = "SELECT * FROM `tbl_tiempo` order by id DESC LIMIT 1";
+        $tiempo = DB::table('tbl_tiempo')->orderByDesc('id')->limit(1)->get();
         // echo "La temperatura en ".$ciudad."es de ".$temp."<br>";
         // echo "Estado del cielo: ".$estado_cielo;
         // echo "Descripción: ". $descripcion;
@@ -39,6 +38,6 @@ class WeatherController extends Controller{
         // echo "Presión: ".$presion;
         // echo "Humedad: ".$humedad;
         }
-        return view('vista');
+        return view('vista', compact('tiempo'));
     }
 }

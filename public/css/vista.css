@@ -10,3 +10,15 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 695px;
 }
+
+.container {
+    background-color: red;
+}
+
+.estadistica {
+    background-color: goldenrod;
+}
+
+.resultado {
+    background-color: green;
+}

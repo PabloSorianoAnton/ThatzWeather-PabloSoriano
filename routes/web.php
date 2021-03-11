@@ -16,6 +16,7 @@ use App\Http\Controllers\WeatherController; //similar al include
 
 Route::get('/',[WeatherController::class,'login']);
 Route::get('login',[WeatherController::class,'login']);
+Route::get('vista',[WeatherController::class,'vista']);
 Route::get('/buscar',[WeatherController::class,'buscar']);
 Route::delete('/borrar/{id}',[WeatherController::class,'borrar']);
 Route::get('/pagar/{id}/{precio}',[WeatherController::class,'pagar']);

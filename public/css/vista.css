@@ -1,0 +1,12 @@
+.logo {
+    width: 50%;
+    margin-top: 5%;
+    margin-left: 25%;
+    /* background-color: red; */
+}
+
+body {
+    background-image: url('../../public/img/home.png');
+    background-repeat: no-repeat;
+    background-size: 100% 695px;
+}

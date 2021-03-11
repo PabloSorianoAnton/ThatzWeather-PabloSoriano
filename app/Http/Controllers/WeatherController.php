@@ -15,8 +15,7 @@ class WeatherController extends Controller{
         if($_GET["cpostal"]==null) {
             return redirect('login');
             die();
-        }
-        // return view('vista');
+        } else { 
         $datos = file_get_contents ("http://api.openweathermap.org/data/2.5/weather?zip=".$_GET['cpostal'].",es&units=metric&appid=6682dabc389796ef2723e3330b13900a&lang=es");
         $json = json_decode($datos);
         $ciudad = $json->name;
@@ -31,11 +30,15 @@ class WeatherController extends Controller{
         $estado_cielo = $json->weather[0]->main;
         $descripcion = $json->weather[0]->description;
 
-        echo "La temperatura en ".$ciudad."es de ".$temp;
-        echo "Estado del cielo: ".$estado_cielo;
-        echo "Descripción: ". $descripcion;
-        echo "Temperatura: ".$temp." K [Máx: ".$tempmax."K, Mín: ".$tempmin."K]";
-        echo "Presión: ".$presion;
-        echo "Humedad: ".$humedad;
+        DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp]);
+
+        // echo "La temperatura en ".$ciudad."es de ".$temp."<br>";
+        // echo "Estado del cielo: ".$estado_cielo;
+        // echo "Descripción: ". $descripcion;
+        // echo "Temperatura: ".$temp." K [Máx: ".$tempmax."K, Mín: ".$tempmin."K]";
+        // echo "Presión: ".$presion;
+        // echo "Humedad: ".$humedad;
+        }
+        return view('vista');
     }
 }

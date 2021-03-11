@@ -30,7 +30,7 @@
         </button>
       </div>
     </form>
-    <p>¡Que la lluvia no te pare!</p>
+    <p class="text-white">¡Que la lluvia no te pare!</p>
   </div>
 
 </body>

@@ -18,13 +18,16 @@
   </div>
 
   <div class="form">
-    <p>Entérate del tiempo en la zona exacta que te interesa bucando por código postal.</p>
+    <p class="text-white">Entérate del tiempo en la zona exacta que te interesa bucando por código postal.</p>
     <form action="{{url('buscar/')}}" method="GET" enctype="multipart/form-data">
       <div class="form-group">
-        <input type="text" id="cpostal" name="cpostal" class="form-control" placeholder="Introduce el código postal"><br>
+        <input type="text" id="cpostal" name="cpostal" class="form-control" style="border: 1px solid white; width: 120%; margin-left: -10%; background-color: transparent; color: white;" placeholder="Introduce el código postal"><br>
       </div>
       <div class="col-12">
-        <button type="submit" class="boton">Buscar</button>
+        <button type="submit" class="boton">
+          <span style="margin-right: 38%; margin-left: 38%;">Buscar</span>
+          <img src="./../public/img/Shape.png">
+        </button>
       </div>
     </form>
     <p>¡Que la lluvia no te pare!</p>

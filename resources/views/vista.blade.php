@@ -13,7 +13,54 @@
 </head>
 
 <body>
-<div class="card">
+<div class="logo">
+    <img src="./../public/img/Bitmap.png">
+    <p class="text-white" id="eslogan">¡Que la lluvia no te pare!</p>
+  </div>
+@foreach($tiempo as $dia)
+<div class="card" id="resultado">
+    <div class="card-body">
+        <div class="card" id="info" style="padding-left: 23%; width: 55%;">
+            <p class="text-white">Código postal: <strong>{{$dia->cpostal}}</strong><p>
+            <p class="text-white" style="margin-top: -15%;">Ciudad: <strong>{{$dia->ciudad}}</strong><p>
+        </div>
+        <div class="card" id="info" style=" width: 45%;">
+            <img src="./../public/img/Shape.png">
+            <a href="{{url('login/')}}" class="text-white" style="width: 40%; margin-top: -7%; margin-left: 12%;font-size:80%;">Buscar otra zona</a>
+        </div>
+            <div class="card" id="salida" style=" width: 20%;">
+                <p class="text-white">Ahora</p>
+                <p class="text-white"><strong>{{$dia->descripcion}}</strong></p>
+                <p class="text-white"><strong>{{$dia->temperatura}}</strong></p>
+                <p class="text-white"><strong></strong></p>
+                <!-- <?php
+                    echo $_GET['icono'];
+                ?> -->
+            </div>
+            <div class="card" id="salida" style=" width: 40%;">
+            </div>
+            <div class="card" id="salida" style=" width: 40%;">
+            </div>
+            <!-- <thead class="thead-dark">
+                <tr>
+                    <th>Código postal</th>
+                    <th>Ciudad</th>
+                    <th>Temperatura</th>
+                    <th>Descrpcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{$dia->cpostal}}</td>
+                    <td>{{$dia->ciudad}}</td>
+                    <td>{{$dia->temperatura}}</td>
+                    <td>{{$dia->descripcion}}</td>
+                </tr>
+            </tbody> -->
+    </div>
+</div> 
+@endforeach
+<div class="card" id="estadis">
     <div class="card-body">
         <table class="table table-light">
             <thead class="thead-dark">
@@ -32,31 +79,11 @@
                     <td>{{$dia->temperatura}}</td>
                     <td>{{$dia->descripcion}}</td>
                 </tr>
-            @endforeach   
-
-
-    <?php
-    // echo $_GET['cpostal'];
-    echo '<div class="logo">
-        <img src="./../public/img/Bitmap.png">
-    </div>';
-    // echo '<div class="container">
-
-    //     <div class="container overflow-hidden">
-    //         <div class="row gx-5">
-    //             <div class="col-8">';
-    //                 echo '<div class="resultado">La temperatura en '.$_GET['ciudad'].'es de '.$temp.'</div>';
-    //             echo '</div>
-    //             <div class="col-4">
-    //                 <div class="estadistica">
-    //                     Custom column padding
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     </div>
-
-    // </div>';
-    ?>
+            @endforeach 
+            </tbody>
+        </table>
+    </div>
+</div> 
 </body>
 <script src="{{asset('js/app.js')}}"></script>  
 </html>

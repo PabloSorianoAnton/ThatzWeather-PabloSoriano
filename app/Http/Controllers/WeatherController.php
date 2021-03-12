@@ -27,13 +27,13 @@ class WeatherController extends Controller{
         $descripcion = $json->weather[0]->description;
         $cpostal = $_GET['cpostal'];
         $temp = $json->main->temp;
-        $descripcion = $json->weather[0]->description;
-        // DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp, 'descripcion'=>$descripcion]);
+        $icon = $json->weather[0]->icon;
+        // DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp, 'descripcion'=>$descripcion, 'icon'=>$icon]);
         // $tiempo = "SELECT * FROM `tbl_tiempo` order by id DESC LIMIT 1";
         $tiempo = DB::table('tbl_tiempo')->orderByDesc('id')->limit(1)->get();
         // echo "La temperatura en ".$ciudad."es de ".$temp."<br>";
-        // echo "Estado del cielo: ".$estado_cielo;
-        // echo "Descripción: ". $descripcion;
+        // echo "Estado del cielo: ".$icono;
+        // $icono = "<img src='http://openweathermap.org/img/wn/".$icon."@2x.png'";
         // echo "Temperatura: ".$temp." K [Máx: ".$tempmax."K, Mín: ".$tempmin."K]";
         // echo "Presión: ".$presion;
         // echo "Humedad: ".$humedad;

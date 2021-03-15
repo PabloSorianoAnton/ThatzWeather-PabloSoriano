@@ -20,7 +20,7 @@
 @foreach($tiempo as $dia)
 <div class="card" id="resultado">
     <div class="card-body">
-        <div class="card" id="info" style="padding-left: 23%; width: 55%;">
+        <div class="card" id="info" style="padding-left: 20%; width: 55%;">
             <p class="text-white">Código postal: <strong>{{$dia->cpostal}}</strong><p>
             <p class="text-white" style="margin-top: -15%;">Ciudad: <strong>{{$dia->ciudad}}</strong><p>
         </div>
@@ -29,13 +29,16 @@
             <a href="{{url('login/')}}" class="text-white" style="width: 40%; margin-top: -7%; margin-left: 12%;font-size:80%;">Buscar otra zona</a>
         </div>
             <div class="card" id="salida" style=" width: 20%;">
-                <p class="text-white">Ahora</p>
-                <p class="text-white"><strong>{{$dia->descripcion}}</strong></p>
-                <p class="text-white"><strong>{{$dia->temperatura}}</strong></p>
-                <p class="text-white"><strong></strong></p>
-                <!-- <?php
-                    echo $_GET['icono'];
-                ?> -->
+                <div class="card" id="titulo">
+                    <p class="text-white">Ahora</p>
+                </div>
+                <div class="card" id="thatz" style="float: left;">
+                    <p class="text-white"><strong>Holaaaa</strong></p>
+                </div>
+                <div class="card" id="weather"  style="float: right;">
+                    <p class="text-white"><strong>{{$dia->descripcion}}</strong></p>
+                    <p class="text-white"><strong>{{$dia->temperatura}}</strong></p>
+                </div>
             </div>
             <div class="card" id="salida" style=" width: 40%;">
             </div>
@@ -61,27 +64,35 @@
 </div> 
 @endforeach
 <div class="card" id="estadis">
-    <div class="card-body">
-        <table class="table table-light">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Codi postal</th>
-                    <th>Ciudad</th>
-                    <th>Temperatura</th>
-                    <th>Descrpcion</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($tiempo as $dia)
-                <tr>
-                    <td>{{$dia->cpostal}}</td>
-                    <td>{{$dia->ciudad}}</td>
-                    <td>{{$dia->temperatura}}</td>
-                    <td>{{$dia->descripcion}}</td>
-                </tr>
+    <div class="card-body" style="height: 100%;">
+        <p class="text-white" id="desc">Top 5 de las zonas más frías según tus búsquedas</p>
+        <div class="card" id="posicion">
+            <div class="card" id="num">
+                <p class="text-white">1.</p>
+            </div>
+            <div class="card" id="num">
+                <p class="text-white">2.</p>
+            </div>
+            <div class="card" id="num">
+                <p class="text-white">3.</p>
+            </div>
+            <div class="card" id="num">
+                <p class="text-white">4.</p>
+            </div>
+            <div class="card" id="num">
+                <p class="text-white">5.</p>
+            </div>
+        </div>
+            @foreach($ranking as $posicion)
+            <div class="card" id="grados">
+                <p class="text-white" style="margin-top: -7%;">{{$posicion->temperatura}}º</p>
+            </div>
+            <div class="card" id="rank">
+                <p class="text-white" >Código postal: <strong>{{$posicion->cpostal}}</strong></p>
+                <p class="text-white" style="margin-top: -7%;">Ciudad: <strong>{{$posicion->ciudad}}</strong></p>
+                <hr>
+            </div>
             @endforeach 
-            </tbody>
-        </table>
     </div>
 </div> 
 </body>

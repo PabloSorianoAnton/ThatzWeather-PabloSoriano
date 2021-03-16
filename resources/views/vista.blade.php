@@ -13,6 +13,31 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        function comprobar() {
+            var cpostal = document.getElementById("cpostal").value;
+            // Obtener la instancia del objeto XMLHttpRequest
+            var peticion_http = new XMLHttpRequest();
+            //if (peticion_http) {
+            // Preparar la funcion de respuesta
+            peticion_http.onreadystatechange = procesaRespuesta;
+            // Preparar cadena
+            var cadena = "zip=" + cpostal + ",es&appid=a3ac93f6417ce945ab879451ada7dc9d&lang=es";
+            // Realizar peticion HTTP
+            peticion_http.open('GET', 'http://api.openweathermap.org/data/2.5/weather?' + cadena, true);
+            peticion_http.send(null);
+            //}
+
+            function procesaRespuesta() {
+                if (peticion_http.readyState == 4) {
+                    if (peticion_http.status == 200) {
+                        var respuesta = JSON.parse(peticion_http.responseText);
+                        document.getElementById("tiempo").innerHTML = "El tiempo en " + respuesta.name + ", " + respuesta.sys.country + " es de " + respuesta.main.temp + "  C, " + respuesta.weather[0].description + "<img src='http://openweathermap.org/img/w/" + respuesta.weather[0].icon + ".png' >";
+                    }
+                }
+            }
+        }
+    </script>
 <div class="logo">
     <img src="./../public/img/Bitmap.png">
     <p class="text-white" id="eslogan">¡Que la lluvia no te pare!</p>
@@ -21,45 +46,33 @@
 <div class="card" id="resultado">
     <div class="card-body">
         <div class="card" id="info" style="padding-left: 20%; width: 55%;">
-            <p class="text-white">Código postal: <strong>{{$dia->cpostal}}</strong><p>
-            <p class="text-white" style="margin-top: -15%;">Ciudad: <strong>{{$dia->ciudad}}</strong><p>
+            <p class="text-white">Código postal: <strong id="cpostal">{{$dia->cpostal}}</strong><p>
+            <p class="text-white" style="margin-top: -13%;">Ciudad: <strong>{{$dia->ciudad}}</strong><p>
         </div>
         <div class="card" id="info" style=" width: 45%;">
             <img src="./../public/img/Shape.png">
             <a href="{{url('login/')}}" class="text-white" style="width: 40%; margin-top: -7%; margin-left: 12%;font-size:80%;">Buscar otra zona</a>
         </div>
-            <div class="card" id="salida" style=" width: 20%;">
-                <div class="card" id="titulo">
-                    <p class="text-white">Ahora</p>
-                </div>
-                <div class="card" id="thatz" style="float: left;">
-                    <p class="text-white"><strong>Holaaaa</strong></p>
-                </div>
-                <div class="card" id="weather"  style="float: right;">
-                    <p class="text-white"><strong>{{$dia->descripcion}}</strong></p>
-                    <p class="text-white"><strong>{{$dia->temperatura}}</strong></p>
+        <div class="card" id="salida" style=" width: 26%;">
+            <div class="card" id="titulo">
+                <p class="text-white">Ahora</p>
+            </div>
+            <div class="card" id="thatz">
+                <img id="icono" src='http://openweathermap.org/img/w/{{$dia->icono}}.png'>
+                <p class="text-white" id="weather" style="padding-top: 12%; font-size: 90%;"><strong>{{$dia->descripcion}}</strong></p>
+                <p class="text-white" id="weather" style="margin-top: -42%; font-size: 200%;">{{$dia->temperatura}}º</p>
+            </div>
+        </div>
+        <div class="card" id="horas" style=" width: 37%;">
+            <div class="card" id="titulo">
+                    <p class="text-white">Próximas horas</p>
                 </div>
             </div>
-            <div class="card" id="salida" style=" width: 40%;">
+        <div class="card" id="dias" style=" width: 37%;">
+            <div class="card" id="titulo">
+                <p class="text-white">Próximos 5 días</p>
             </div>
-            <div class="card" id="salida" style=" width: 40%;">
-            </div>
-            <!-- <thead class="thead-dark">
-                <tr>
-                    <th>Código postal</th>
-                    <th>Ciudad</th>
-                    <th>Temperatura</th>
-                    <th>Descrpcion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{$dia->cpostal}}</td>
-                    <td>{{$dia->ciudad}}</td>
-                    <td>{{$dia->temperatura}}</td>
-                    <td>{{$dia->descripcion}}</td>
-                </tr>
-            </tbody> -->
+        </div>
     </div>
 </div> 
 @endforeach

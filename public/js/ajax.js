@@ -1,3 +1,25 @@
+window.onload = function() {
+    modal = document.getElementById("myModal");
+    read();
+}
+
+function objetoAjax() {
+    var xmlhttp = false;
+    try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (e) {
+        try {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (E) {
+            xmlhttp = false;
+        }
+    }
+    if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+        xmlhttp = new XMLHttpRequest();
+    }
+    return xmlhttp;
+}
+
 function comprobar() {
     var ciudad = document.getElementById("ciudad").value;
     // Obtener la instancia del objeto XMLHttpRequest
@@ -19,5 +41,23 @@ function procesaRespuesta() {
             var tiempo = document.getElementById("tiempo");
             tiempo.innerHTML = "El tiempo en " + respuesta.name + ", " + respuesta.sys.country + " es de " + respuesta.main.temp + "  C, " + respuesta.weather[0].description + "<img src='http://openweathermap.org/img/w/" + respuesta.weather[0].icon + ".png' >";
         }
+    }
+}
+
+function openmodal(id, nombre, descripcion, precio) {
+    modal.style.display = "block";
+    document.getElementById('id1').value = id;
+    document.getElementById('nombre1').value = nombre;
+    document.getElementById('descripcion1').value = descripcion;
+    document.getElementById('precio1').value = precio;
+}
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }

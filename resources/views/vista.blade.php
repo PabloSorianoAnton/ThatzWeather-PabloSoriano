@@ -13,31 +13,6 @@
 </head>
 
 <body>
-    <script type="text/javascript">
-        function comprobar() {
-            var cpostal = document.getElementById("cpostal").value;
-            // Obtener la instancia del objeto XMLHttpRequest
-            var peticion_http = new XMLHttpRequest();
-            //if (peticion_http) {
-            // Preparar la funcion de respuesta
-            peticion_http.onreadystatechange = procesaRespuesta;
-            // Preparar cadena
-            var cadena = "zip=" + cpostal + ",es&appid=a3ac93f6417ce945ab879451ada7dc9d&lang=es";
-            // Realizar peticion HTTP
-            peticion_http.open('GET', 'http://api.openweathermap.org/data/2.5/weather?' + cadena, true);
-            peticion_http.send(null);
-            //}
-
-            function procesaRespuesta() {
-                if (peticion_http.readyState == 4) {
-                    if (peticion_http.status == 200) {
-                        var respuesta = JSON.parse(peticion_http.responseText);
-                        document.getElementById("tiempo").innerHTML = "El tiempo en " + respuesta.name + ", " + respuesta.sys.country + " es de " + respuesta.main.temp + "  C, " + respuesta.weather[0].description + "<img src='http://openweathermap.org/img/w/" + respuesta.weather[0].icon + ".png' >";
-                    }
-                }
-            }
-        }
-    </script>
 <div class="logo">
     <img src="./../public/img/Bitmap.png">
     <p class="text-white" id="eslogan">¡Que la lluvia no te pare!</p>
@@ -46,7 +21,8 @@
 <div class="card" id="resultado">
     <div class="card-body">
         <div class="card" id="info" style="padding-left: 20%; width: 55%;">
-            <p class="text-white">Código postal: <strong id="cpostal">{{$dia->cpostal}}</strong><p>
+            <input type="hidden" id="cpostal" value="{{$dia->cpostal}}"></input>
+            <p class="text-white">Código postal: <strong>{{$dia->cpostal}}</strong><p>
             <p class="text-white" style="margin-top: -13%;">Ciudad: <strong>{{$dia->ciudad}}</strong><p>
         </div>
         <div class="card" id="info" style=" width: 45%;">
@@ -58,16 +34,56 @@
                 <p class="text-white">Ahora</p>
             </div>
             <div class="card" id="thatz">
-                <img id="icono" src='http://openweathermap.org/img/w/{{$dia->icono}}.png'>
+                <img class="img-fluid" id="icono" src='http://openweathermap.org/img/wn/{{$dia->icono}}@2x.png'>
                 <p class="text-white" id="weather" style="padding-top: 12%; font-size: 90%;"><strong>{{$dia->descripcion}}</strong></p>
                 <p class="text-white" id="weather" style="margin-top: -42%; font-size: 200%;">{{$dia->temperatura}}º</p>
             </div>
         </div>
         <div class="card" id="horas" style=" width: 37%;">
+            <script type="text/javascript">
+                window.onload = function(){
+                    horas();
+                }
+                function horas() {
+                    var cpostal = document.getElementById("cpostal").value;
+                    // console.log(cpostal);
+                    // Obtener la instancia del objeto XMLHttpRequest
+                    var peticion_http = new XMLHttpRequest();
+                    //if (peticion_http) {
+                    // Preparar la funcion de respuesta
+                    peticion_http.onreadystatechange = hours;
+                    // Preparar cadena
+                    var cadena = "zip=" + cpostal + ",es&units=metric&appid=6682dabc389796ef2723e3330b13900a&lang=es";
+                    // Realizar peticion HTTP
+                    peticion_http.open('GET', 'http://api.openweathermap.org/data/2.5/forecast?' + cadena, true);
+                    peticion_http.send(null);
+                    //}
+                    function hours() {
+                        if (peticion_http.readyState == 4) {
+                            if (peticion_http.status == 200) {
+                                var respuesta = JSON.parse(peticion_http.responseText);
+                                for (let i = 0; i < 3; i++) {
+                                console.log(respuesta);
+                                document.getElementById("hours").innerHTML = 
+                                "<div class='card' id='mostrar'><p class='text-white'>Ahora</p><img class='img-fluid' src='http://openweathermap.org/img/w/{{$dia->icono}}.png'><p class='text-white' id='descprition'><strong>{{$dia->descripcion}}</strong></p><p class='text-white' id='descprition'>{{$dia->temperatura}}º</p></div>" 
+                                +
+                                "<div class='card' id='mostrar' style='margin-left: 25%;'><p class='text-white'>Mañana</p><img class='img-fluid' src='http://openweathermap.org/img/w/" + respuesta.list[i].weather[i].icon + ".png'><p class='text-white' id='descprition'>" + respuesta.list[i].weather[i].description + "</p><p class='text-white' id='descprition'><strong>" + respuesta.list[i].main.temp + "</strong></p></div>"
+                                +
+                                "<div class='card' id='mostrar' style='margin-left: 25%;'><p class='text-white'>Mañana</p><img class='img-fluid' src='http://openweathermap.org/img/w/" + respuesta.list[i].weather[i].icon + ".png'><p class='text-white' id='descprition'>" + respuesta.list[i].weather[i].description + "</p><p class='text-white' id='descprition'><strong>" + respuesta.list[i].main.temp + "</strong></p></div>";  
+                                +
+                                "<div class='card' id='mostrar' style='margin-left: 25%;'><p class='text-white'>Mañana</p><img class='img-fluid' src='http://openweathermap.org/img/w/" + respuesta.list[i].weather[i].icon + ".png'><p class='text-white' id='descprition'>" + respuesta.list[i].weather[i].description + "</p><p class='text-white' id='descprition'><strong>" + respuesta.list[i].main.temp + "</strong></p></div>";  
+                                }
+                            }
+                        }
+                    }
+                }
+            </script>
             <div class="card" id="titulo">
-                    <p class="text-white">Próximas horas</p>
-                </div>
+                <p class="text-white">Próximas horas</p>
             </div>
+            <div class="card" id="hours">
+            </div>
+        </div>
         <div class="card" id="dias" style=" width: 37%;">
             <div class="card" id="titulo">
                 <p class="text-white">Próximos 5 días</p>

@@ -28,7 +28,7 @@ class WeatherController extends Controller{
         $cpostal = $_GET['cpostal'];
         $temp = $json->main->temp;
         $icon = $json->weather[0]->icon;
-        // DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp, 'descripcion'=>$descripcion, 'icon'=>$icon]);
+        DB::table('tbl_tiempo')->insertGetId(['ciudad'=>$ciudad, 'cpostal'=>$_GET['cpostal'],'temperatura'=>$temp, 'descripcion'=>$descripcion, 'icono'=>$icon]);
         $tiempo = DB::table('tbl_tiempo')->orderByDesc('id')->limit(1)->get();
         $ranking = DB::table('tbl_tiempo')->orderBy('temperatura')->limit(5)->get();
         }
